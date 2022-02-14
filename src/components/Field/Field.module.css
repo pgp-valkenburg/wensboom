@@ -1,4 +1,14 @@
 .field {
   background-color: green;
   padding: 1em 0;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.root {
+  width: 0px;
+  height: 0px;
+  position: relative;
 }

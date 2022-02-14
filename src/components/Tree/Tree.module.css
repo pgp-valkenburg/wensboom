@@ -1,0 +1,31 @@
+.tree {
+  transition: all 0.5s;
+  z-index: 1;
+  background: brown;
+  border-bottom-left-radius: 50% 7%;
+  border-bottom-right-radius: 50% 7%;
+  position: absolute;
+  bottom: 0;
+}
+
+.branch {
+  transition: all 0.5s;
+  z-index: 1;
+  transform-origin: center bottom;
+  position: absolute;
+  background: brown;
+}
+
+.shade {
+  transition: all 0.5s;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  position: absolute;
+}
+
+.position {
+  position: absolute;
+  bottom: 0;
+  width: 30px;
+  left: -15px;
+}
