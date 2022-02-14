@@ -1,5 +1,12 @@
 import styles from "./Tree.module.css";
 
+const easeInOutCubic = (x: number): number =>
+  x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+
+const easeInQuad = (x: number): number => x * x;
+
+const easeOutQuad = (x: number): number => 1 - Math.pow(1 - x, 3);
+
 const grow =
   (growth: number) =>
   (max: number, startAt = 0, min = 0): number => {
@@ -17,8 +24,8 @@ const Branch: React.FC<{
   height: number;
   align?: "left" | "right";
 }> = ({ growth, angle, width, bottom, height, children, align = "left" }) => {
-  const g2 = grow(growth * growth);
-  const g = grow(1 - Math.pow(1 - growth, 3));
+  const g2 = grow(easeInQuad(growth));
+  const g = grow(easeOutQuad(growth));
   return (
     <div
       className={styles.branch}
@@ -36,8 +43,9 @@ const Branch: React.FC<{
 };
 
 export const Tree: React.VFC<{ growth: number }> = ({ growth }) => {
-  const g2 = grow(growth * growth);
-  const g = grow(1 - Math.pow(1 - growth, 3));
+  const g3 = grow(easeInOutCubic(growth));
+  const g2 = grow(easeInQuad(growth));
+  const g = grow(easeOutQuad(growth));
   return (
     <div className={styles.position}>
       <div
@@ -177,10 +185,10 @@ export const Tree: React.VFC<{ growth: number }> = ({ growth }) => {
       <div
         className={styles.shade}
         style={{
-          width: `${g2(500)}px`,
-          left: `-${g2(250)}px`,
-          height: `${g2(80)}px`,
-          bottom: `-${g2(40)}px`,
+          width: `${g3(500)}px`,
+          left: `-${g3(250)}px`,
+          height: `${g3(80)}px`,
+          bottom: `-${g3(40)}px`,
         }}
       ></div>
     </div>
