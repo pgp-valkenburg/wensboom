@@ -61,7 +61,23 @@ export const Tree: React.VFC<{ growth: number }> = ({ growth }) => {
             width={30 * 1.3}
             bottom={110}
             height={130}
-          />
+          >
+            <Branch
+              growth={growth}
+              angle={-25}
+              width={20 * 1.3}
+              bottom={110}
+              height={130}
+            />
+            <Branch
+              growth={growth}
+              angle={25}
+              width={22 * 1.3}
+              bottom={110}
+              height={130}
+              align="right"
+            />
+          </Branch>
           <Branch
             growth={growth}
             angle={40}
@@ -69,7 +85,30 @@ export const Tree: React.VFC<{ growth: number }> = ({ growth }) => {
             bottom={110}
             height={120}
             align="right"
-          />
+          >
+            <Branch
+              growth={growth}
+              angle={-50}
+              width={20 * 1.3}
+              bottom={30}
+              height={100}
+            />
+            <Branch
+              growth={growth}
+              angle={-30}
+              width={20 * 1.3}
+              bottom={110}
+              height={130}
+            />
+            <Branch
+              growth={growth}
+              angle={25}
+              width={22 * 1.3}
+              bottom={110}
+              height={130}
+              align="right"
+            />
+          </Branch>
         </Branch>
         <Branch
           growth={growth}
@@ -78,7 +117,62 @@ export const Tree: React.VFC<{ growth: number }> = ({ growth }) => {
           bottom={170}
           height={130}
           align={"right"}
-        />
+        >
+          <Branch
+            growth={growth}
+            angle={-40}
+            width={60 * 1.3}
+            bottom={110}
+            height={170}
+          >
+            <Branch
+              growth={growth}
+              angle={-25}
+              width={40 * 1.3}
+              bottom={130}
+              height={150}
+            />
+            <Branch
+              growth={growth}
+              angle={25}
+              width={22 * 1.3}
+              bottom={140}
+              height={130}
+              align="right"
+            />
+          </Branch>
+          <Branch
+            growth={growth}
+            angle={50}
+            width={40 * 1.3}
+            bottom={110}
+            height={120}
+            align="right"
+          >
+            <Branch
+              growth={growth}
+              angle={-50}
+              width={20 * 1.3}
+              bottom={30}
+              height={100}
+            />
+            <Branch
+              growth={growth}
+              angle={-30}
+              width={20 * 1.3}
+              bottom={110}
+              height={130}
+            />
+            <Branch
+              growth={growth}
+              angle={25}
+              width={22 * 1.3}
+              bottom={110}
+              height={130}
+              align="right"
+            />
+          </Branch>
+        </Branch>
       </div>
       <div
         className={styles.shade}
