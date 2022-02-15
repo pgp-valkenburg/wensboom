@@ -20,13 +20,24 @@ export const Note: React.FC<Props> = ({ onSubmit }) => {
     setState("submitting");
   }, []);
 
+  const onNoteReset = useCallback(() => {
+    setContents("");
+    setState("resetting");
+  }, []);
+
   useEffect(() => {
     if (state === "submitting") {
       const timer = setTimeout(() => {
         console.log("submitting-note");
         onSubmit(contents);
         setState("sharing");
-      }, 4000);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+    if (state === "resetting") {
+      const timer = setTimeout(() => {
+        setState("enter-note");
+      }, 2000);
       return () => clearTimeout(timer);
     }
   }, [state, contents, onSubmit]);
@@ -39,6 +50,7 @@ export const Note: React.FC<Props> = ({ onSubmit }) => {
             [styles.note]: true,
             [styles.fly]: state === "submitting",
             [styles.sharing]: state === "sharing",
+            [styles.frontFacing]: state === "resetting",
           })}
         >
           <textarea
@@ -51,6 +63,17 @@ export const Note: React.FC<Props> = ({ onSubmit }) => {
           <button disabled={contents.trim().length < 4} onClick={onNoteSubmit}>
             Make a wish
           </button>
+        </div>
+        <div
+          className={className({
+            [styles.shareWish]: true,
+            [styles.backFacing]: state === "resetting",
+            [styles.invisible]:
+              state === "enter-note" || state === "submitting",
+          })}
+        >
+          <h1>Delen! Duimpies!</h1>
+          <button onClick={onNoteReset}>Doe nog een wens...</button>
         </div>
       </div>
     </div>
