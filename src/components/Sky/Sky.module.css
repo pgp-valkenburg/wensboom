@@ -5,4 +5,11 @@
   justify-content: flex-end;
 
   background-color: skyblue;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 580px) {
+  .sky {
+    height: 300px;
+  }
 }

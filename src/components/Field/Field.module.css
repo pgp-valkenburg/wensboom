@@ -12,3 +12,21 @@
   height: 0px;
   position: relative;
 }
+
+@media screen and (max-width: 1080px) {
+  .root {
+    transform: scale(0.7);
+  }
+  .field {
+    height: 80px;
+  }
+}
+
+@media screen and (max-width: 580px) {
+  .root {
+    transform: scale(0.5);
+  }
+  .field {
+    height: 70px;
+  }
+}

@@ -14,6 +14,17 @@
   transform-origin: center bottom;
   position: absolute;
   background: brown;
+  border-top-left-radius: 50% 7%;
+  border-top-right-radius: 50% 7%;
+}
+
+.leaves {
+  transition: all 0.5s;
+  z-index: 20;
+  transform-origin: center bottom;
+  position: absolute;
+  border-radius: 50%;
+  background: green;
 }
 
 .shade {
