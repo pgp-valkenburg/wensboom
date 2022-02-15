@@ -1,0 +1,58 @@
+.noteArea {
+  display: flex;
+  justify-content: center;
+}
+
+@keyframes fly {
+  0% {
+    box-shadow: 0px 10px 5px rgba(0, 0, 0, 0.3);
+  }
+  10% {
+    transform: perspective(500px) translate3d(0px, -50px, 5px);
+  }
+  40% {
+    transform: perspective(500px) translate3d(-20px, -200px, 5px)
+      rotate3d(1, 0, 0, 45deg);
+  }
+  90% {
+    transform: perspective(500px) translate3d(-20px, -280px, 5px)
+      rotate3d(1, 0, 0, 90deg) scale(0.1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: perspective(500px) translate3d(-20px, -250px, 5px)
+      rotate3d(1, 0, 0, 90deg) scale(0.05);
+    opacity: 0;
+  }
+}
+
+.fly {
+  animation: 3s ease-in-out 0s 1 normal forwards running fly;
+}
+
+.sharing {
+  display: none;
+}
+
+.note {
+  transform: perspective(500px);
+  /* transition: all 0.5s; */
+  background-color: yellow;
+  padding: 1rem;
+  width: 100%;
+  max-width: 30em;
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.3);
+}
+
+.note textarea {
+  background-color: yellow;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  display: block;
+  margin: 0;
+  height: 8em;
+  max-width: calc(100% - 2rem);
+  margin-bottom: 1rem;
+  width: 100%;
+}

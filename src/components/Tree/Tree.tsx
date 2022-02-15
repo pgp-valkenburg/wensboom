@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import { className } from "../../utils/className";
 import styles from "./Tree.module.css";
 
 const easeInOutCubic = (x: number): number =>
@@ -93,10 +95,22 @@ export const Tree: React.VFC<{ growth: number }> = ({ growth }) => {
   const g3 = grow(growth, easeInOutCubic);
   const g2 = grow(growth, easeInQuad);
   const g = grow(growth, easeOutQuad);
+  const [startGrowth, setStartGrowth] = useState(growth);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setStartGrowth(growth);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [growth]);
+
   return (
     <div className={styles.position}>
       <div
-        className={styles.tree}
+        className={className({
+          [styles.tree]: true,
+          [styles.shake]: startGrowth !== growth,
+        })}
         style={{
           height: `${g(200)}px`,
           width: `${g2(160)}px`,
