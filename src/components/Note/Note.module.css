@@ -52,7 +52,9 @@
 .note {
   position: absolute;
   z-index: 10;
-  background-color: yellow;
+  background-color: #f9f986;
+  border: 1px solid #929207;
+  border-radius: 5px;
   padding: 1rem;
   width: calc(100% - 2rem);
   max-width: 30em;
@@ -60,7 +62,7 @@
 }
 
 .note textarea {
-  background-color: yellow;
+  background: transparent;
   border: none;
   font-size: 1.5rem;
   line-height: 2rem;
