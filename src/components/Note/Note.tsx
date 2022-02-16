@@ -56,7 +56,7 @@ export const Note: React.FC<Props> = ({ onSubmit }) => {
           <textarea
             value={contents}
             onChange={onChange}
-            disabled={state !== "enter-note"}
+            disabled={!["enter-note", "resetting"].some((s) => s === state)}
             placeholder="Type uw wens voor Valkenburg aan de Geul hier..."
           ></textarea>
 
