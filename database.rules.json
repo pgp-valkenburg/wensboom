@@ -1,6 +1,13 @@
 {
   "rules": {
-    ".read": true,
-    ".write": true
+    ".read": "auth.token.system === 'wishes'",
+    ".write": "auth.token.system === 'wishes'",
+    "wishes": {
+      "$wish": {
+        "body": { ".validate": true },
+        "approved": { ".validate": true },
+        "$other": { ".validate": false }
+      }
+    }
   }
 }
