@@ -1,5 +1,16 @@
+.grass {
+  background-image: url(./grass.png);
+  background-repeat: repeat-x;
+  height: 5px;
+}
+
+.grassBottom {
+  background-position: bottom;
+  background-color: white;
+}
+
 .field {
-  background-color: green;
+  background-color: #00c200;
   padding: 1em 0;
   height: 100px;
   display: flex;
