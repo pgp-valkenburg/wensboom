@@ -55,6 +55,7 @@
 
 .position {
   position: absolute;
+  z-index: 0;
   bottom: 0;
   width: 30px;
   left: -15px;
