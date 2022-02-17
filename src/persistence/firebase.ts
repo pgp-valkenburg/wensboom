@@ -23,7 +23,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
-const db = getDatabase(app);
+const db = getDatabase(
+  app,
+  `https://${projectId}-default-rtdb.europe-west1.firebasedatabase.app/`
+);
 if (document.location.hostname === "localhost") {
   // Point to the RTDB emulator running on localhost.
   connectDatabaseEmulator(db, "localhost", 9000);

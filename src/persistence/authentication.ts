@@ -4,11 +4,9 @@ import { auth } from "./firebase";
 
 export type AccessState = "pending" | "denied" | "access";
 
-export const useAccess = (): AccessState => {
+export const useAccess = (user?: string, pass?: string): AccessState => {
   const [accessState, setAccessState] = useState<AccessState>("pending");
   useEffect(() => {
-    const user = process.env.REACT_APP_PUBLIC_USER;
-    const pass = process.env.REACT_APP_PUBLIC_PASSWORD;
     if (user && pass) {
       signInWithEmailAndPassword(auth, user, pass)
         .then((credentials) => {
@@ -20,6 +18,6 @@ export const useAccess = (): AccessState => {
     } else {
       setAccessState("denied");
     }
-  }, []);
+  }, [user, pass]);
   return accessState;
 };
