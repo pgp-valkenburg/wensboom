@@ -1,8 +1,15 @@
 {
   "rules": {
-    ".read": "auth.token.system === 'wishes'",
-    ".write": "auth.token.system === 'wishes'",
+    ".read": false,
+    ".write": false,
+    "wishCount": {
+      ".read": "auth.uid !== null",
+      ".write": "auth.uid !== null"
+    },
     "wishes": {
+      ".read": "auth.uid !== null",
+      ".write": "auth.uid !== null",
+      ".indexOn": "approved",
       "$wish": {
         "body": { ".validate": true },
         "approved": { ".validate": true },

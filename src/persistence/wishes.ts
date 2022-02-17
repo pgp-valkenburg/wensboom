@@ -1,4 +1,15 @@
-import { increment, onValue, push, ref, set } from "firebase/database";
+import {
+  increment,
+  limitToFirst,
+  onValue,
+  push,
+  query,
+  ref,
+  set,
+  equalTo,
+  orderByChild,
+  update,
+} from "firebase/database";
 import { useEffect, useState } from "react";
 import { AccessState } from "./authentication";
 import { db } from "./firebase";
@@ -32,4 +43,49 @@ export const useWishCount = (accessState: AccessState): number => {
     });
   }, [accessState]);
   return count;
+};
+
+export const useNewWishes = (authenticated: boolean) => {
+  const [unhandledWishes, setUnhandledWishes] = useState<
+    { key: string; body: string }[]
+  >([]);
+
+  useEffect(() => {
+    if (!authenticated) return;
+    console.log("checking wishes");
+    const newWishes = query(
+      wishListRef,
+      orderByChild("approved"),
+      equalTo(null),
+      limitToFirst(50)
+    );
+    onValue(newWishes, (snapshot) => {
+      const update: { key: string; body: string }[] = [];
+      snapshot.forEach((e) => {
+        if (e.key) {
+          update.push({ key: e.key, body: e.val().body });
+        }
+      });
+      setUnhandledWishes(update);
+    });
+  }, [authenticated]);
+  return unhandledWishes;
+};
+
+export const approveWishes = (wishList: string[]) => {
+  const updates: Record<string, boolean> = {};
+  wishList.forEach((key) => {
+    updates["/wishes/" + key + "/approved"] = true;
+  });
+
+  return update(ref(db), updates);
+};
+
+export const disapproveWishes = (wishList: string[]) => {
+  const updates: Record<string, boolean> = {};
+  wishList.forEach((key) => {
+    updates["/wishes/" + key + "/approved"] = false;
+  });
+
+  return update(ref(db), updates);
 };

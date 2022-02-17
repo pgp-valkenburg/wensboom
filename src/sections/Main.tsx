@@ -10,10 +10,7 @@ const GROWTH_START = 0.04;
 const WISH_GROWTH = 0.01;
 
 const Main = () => {
-  const access = useAccess(
-    process.env.REACT_APP_PUBLIC_USER,
-    process.env.REACT_APP_PUBLIC_PASSWORD
-  );
+  const access = useAccess();
   const counter = useWishCount(access);
   const onSubmit = useCallback((contents: string) => {
     addWish(contents);
