@@ -5,8 +5,8 @@ import Main from "./sections/Main";
 const App = () => (
   <BrowserRouter>
     <Routes>
+      <Route path="/admin" element={<Admin />} />
       <Route path="/" element={<Main />} />
-      <Route path="admin" element={<Admin />} />
     </Routes>
   </BrowserRouter>
 );
