@@ -11,7 +11,7 @@ export const useAccess = (): AccessState => {
     const pass = process.env.REACT_APP_PUBLIC_PASSWORD;
     if (user && pass) {
       signInWithEmailAndPassword(auth, user, pass)
-        .then((credentials) => {
+        .then(() => {
           setAccessState("access");
         })
         .catch(() => {

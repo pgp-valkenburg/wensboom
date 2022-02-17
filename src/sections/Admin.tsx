@@ -1,5 +1,5 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useState } from "react";
 import { auth } from "../persistence/firebase";
 import {
   approveWishes,
@@ -32,8 +32,12 @@ const Admin = () => {
   const onLogin = useCallback(() => {
     setLoginState("progress");
     signInWithEmailAndPassword(auth, userName, password)
-      .then(() => {
-        setLoginState("authenticated");
+      .then((credentials) => {
+        if (credentials.user.email?.startsWith("admin")) {
+          setLoginState("authenticated");
+        } else {
+          setLoginState("denied");
+        }
       })
       .catch(() => {
         setLoginState("denied");
