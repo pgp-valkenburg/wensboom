@@ -73,9 +73,10 @@ export const useNewWishes = (authenticated: boolean) => {
 };
 
 export const approveWishes = (wishList: string[]) => {
-  const updates: Record<string, boolean> = {};
+  const updates: Record<string, boolean | number> = {};
   wishList.forEach((key) => {
     updates["/wishes/" + key + "/approved"] = true;
+    updates["/wishes/" + key + "/approvedAt"] = new Date().getTime();
   });
 
   return update(ref(db), updates);
