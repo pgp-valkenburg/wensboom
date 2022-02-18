@@ -22,7 +22,7 @@ export const ThoughtBalloon: React.FC<{
           [styles.balloonRight]: position === "right",
         })}
       >
-        {text}
+        <p>{text}</p>
       </div>
     </div>
   );

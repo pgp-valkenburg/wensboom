@@ -52,7 +52,6 @@ export const useNewWishes = (authenticated: boolean) => {
 
   useEffect(() => {
     if (!authenticated) return;
-    console.log("checking wishes");
     const newWishes = query(
       wishListRef,
       orderByChild("approved"),

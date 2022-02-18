@@ -36,7 +36,7 @@ const Main = () => {
       <Sky>
         <Field>
           <Tree growth={growth} />
-          <Thoughts growth={growth} />
+          {access === "access" && <Thoughts growth={growth} />}
         </Field>
       </Sky>
       <p>{counter} wensen in de boom!</p>

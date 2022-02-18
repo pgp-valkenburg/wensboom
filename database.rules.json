@@ -9,7 +9,7 @@
     "wishes": {
       ".read": "auth.uid !== null",
       ".write": "auth.uid !== null",
-      ".indexOn": "approved",
+      ".indexOn": ["approved", "approvedAt"],
       "$wish": {
         "body": { ".validate": true },
         "approved": { ".validate": true },
