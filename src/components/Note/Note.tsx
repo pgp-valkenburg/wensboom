@@ -21,15 +21,14 @@ export const Note: React.FC<Props> = ({ onSubmit }) => {
   }, []);
 
   const onNoteReset = useCallback(() => {
-    setContents("");
     setState("resetting");
   }, []);
 
   useEffect(() => {
     if (state === "submitting") {
       const timer = setTimeout(() => {
-        console.log("submitting-note");
         onSubmit(contents);
+        setContents("");
         setState("sharing");
       }, 3000);
       return () => clearTimeout(timer);
