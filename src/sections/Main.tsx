@@ -2,6 +2,7 @@ import React, { useCallback } from "react";
 import { Field } from "../components/Field";
 import { Note } from "../components/Note";
 import { Sky } from "../components/Sky";
+import { Thoughts } from "../components/Thoughts";
 import { Tree } from "../components/Tree";
 import { useAccess } from "../persistence/authentication";
 import { addWish, useWishCount } from "../persistence/wishes";
@@ -35,6 +36,7 @@ const Main = () => {
       <Sky>
         <Field>
           <Tree growth={growth} />
+          <Thoughts growth={growth} />
         </Field>
       </Sky>
       <p>{counter} wensen in de boom!</p>

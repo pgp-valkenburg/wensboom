@@ -1,0 +1,75 @@
+:root {
+  --thoughtBackground: white;
+  --thoughtBorder: #bbb;
+}
+
+@keyframes bubble {
+  0% {
+    opacity: 0;
+    transform: scale(0.2) translateY(0px);
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1) translateY(0px);
+  }
+  80% {
+    opacity: 1;
+    transform: scale(1) translateY(-20px);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1) translateY(-20px);
+  }
+}
+
+.balloon {
+  animation: bubble 5s ease-in-out 1 forwards;
+  background: var(--thoughtBackground);
+  border: 1px solid var(--thoughtBorder);
+  border-radius: 10px;
+  padding: 1em;
+  position: absolute;
+  bottom: 0;
+  max-width: 350px;
+  width: max-content;
+  margin-bottom: 20px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.balloon::after {
+  display: block;
+  position: absolute;
+  content: ".";
+  color: var(--thoughtBackground);
+  background: var(--thoughtBackground);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--thoughtBorder);
+  border-top: 0px solid transparent;
+  bottom: -10px;
+}
+
+.balloonLeft {
+  right: 0;
+  margin-right: 35px;
+  transform-origin: bottom right;
+}
+
+.balloonLeft::after {
+  right: -15px;
+  transform: rotate(-48deg);
+  box-shadow: -2px 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.balloonRight {
+  left: 0;
+  margin-left: 5px;
+  transform-origin: bottom left;
+}
+
+.balloonRight::after {
+  left: -15px;
+  transform: rotate(48deg);
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+}
