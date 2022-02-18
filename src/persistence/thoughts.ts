@@ -6,6 +6,7 @@ import {
   orderByChild,
   query,
   ref,
+  startAt,
 } from "firebase/database";
 
 const wishListRef = ref(db, "wishes");
@@ -17,6 +18,7 @@ export const useThoughts = () => {
     const newWishes = query(
       wishListRef,
       orderByChild("approvedAt"),
+      startAt(0),
       limitToLast(10)
     );
     onValue(newWishes, (snapshot) => {
