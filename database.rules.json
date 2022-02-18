@@ -13,6 +13,7 @@
       "$wish": {
         "body": { ".validate": true },
         "approved": { ".validate": true },
+        "approvedAt": { ".validate": true },
         "$other": { ".validate": false }
       }
     }
