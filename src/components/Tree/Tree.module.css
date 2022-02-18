@@ -27,25 +27,6 @@
   animation: 0.2s ease-in-out 0s 3 normal forwards treeShake;
 }
 
-.branch {
-  transition: all 0.5s;
-  z-index: 1;
-  transform-origin: center bottom;
-  position: absolute;
-  background: brown;
-  border-top-left-radius: 50% 7%;
-  border-top-right-radius: 50% 7%;
-}
-
-.leaves {
-  transition: all 0.5s;
-  z-index: 20;
-  transform-origin: center bottom;
-  position: absolute;
-  border-radius: 50%;
-  background: green;
-}
-
 .shade {
   transition: all 0.5s;
   background: rgba(0, 0, 0, 0.3);

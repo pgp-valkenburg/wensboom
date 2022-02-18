@@ -1,0 +1,9 @@
+.branch {
+  transition: all 0.5s;
+  z-index: 1;
+  transform-origin: center bottom;
+  position: absolute;
+  background: brown;
+  border-top-left-radius: 50% 7%;
+  border-top-right-radius: 50% 7%;
+}

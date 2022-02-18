@@ -1,95 +1,10 @@
 import { useEffect, useState } from "react";
 import { className } from "../../utils/className";
+import { easeInOutCubic, easeInQuad, easeOutQuad } from "../../utils/easings";
+import { Branch } from "./Branch";
+import { grow } from "./grow";
+import { Leaves } from "./Leaves";
 import styles from "./Tree.module.css";
-
-const easeInOutCubic = (x: number): number =>
-  x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
-
-const easeInQuad = (x: number): number => x * x;
-
-const easeOutQuad = (x: number): number => 1 - Math.pow(1 - x, 3);
-
-const grow =
-  (growth: number, easingFn: (x: number) => number = (x) => x) =>
-  (max: number, startAt = 0, min = 0): number => {
-    if (growth < startAt) return min;
-    const factor = (growth - startAt) / (1 - startAt);
-    const x = easingFn(factor);
-
-    return max * x + min * (1 - x);
-  };
-
-type GrowProps = {
-  growth: number;
-  angle: number;
-  width: number;
-  bottom: number;
-  height: number;
-  startAt?: number;
-  align?: "left" | "right";
-};
-
-const Branch: React.FC<GrowProps> = ({
-  growth,
-  angle,
-  width,
-  bottom,
-  height,
-  children,
-  align = "left",
-  startAt = 0,
-}) => {
-  const g2 = grow(growth, easeInQuad);
-  const g = grow(growth, easeOutQuad);
-  return (
-    <div
-      className={styles.branch}
-      style={{
-        transform: `rotate(${g(angle, startAt)}deg)`,
-        height: `${g(height, startAt)}px`,
-        width: `${g2(width, startAt)}px`,
-        bottom: `${g(bottom)}px`,
-        ...(align === "right" ? { right: 0 } : {}),
-      }}
-    >
-      {children}
-    </div>
-  );
-};
-
-const Leaves: React.FC<GrowProps & { opacity?: number; startAt?: number }> = ({
-  growth,
-  angle,
-  width,
-  bottom,
-  height,
-  opacity = 1,
-  children,
-  align = "left",
-  startAt = 0.15,
-}) => {
-  const g2 = grow(growth, easeInOutCubic);
-  const g = grow(growth, easeOutQuad);
-  return (
-    <div
-      className={styles.leaves}
-      style={{
-        transform: [
-          `rotate(${g(angle)}deg)`,
-          `translateY(${g(height * 0.25, startAt)}px)`,
-          `translateX(-${g2(width * 0.25, startAt)}px)`,
-        ].join(" "),
-        opacity: opacity,
-        height: `${g(height, startAt)}px`,
-        width: `${g2(width, startAt)}px`,
-        bottom: `${g(bottom)}px`,
-        ...(align === "right" ? { right: 0 } : {}),
-      }}
-    >
-      {children}
-    </div>
-  );
-};
 
 export const Tree: React.VFC<{ growth: number }> = ({ growth }) => {
   const g3 = grow(growth, easeInOutCubic);

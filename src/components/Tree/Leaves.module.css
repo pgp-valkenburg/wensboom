@@ -1,0 +1,8 @@
+.leaves {
+  transition: all 0.5s;
+  z-index: 20;
+  transform-origin: center bottom;
+  position: absolute;
+  border-radius: 50%;
+  background: green;
+}
