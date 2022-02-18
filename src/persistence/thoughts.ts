@@ -1,7 +1,6 @@
 import { db } from "./firebase";
 import { useEffect, useState } from "react";
 import {
-  equalTo,
   limitToLast,
   onValue,
   orderByChild,
