@@ -89,3 +89,14 @@
 .invisible {
   opacity: 0;
 }
+
+.bottomBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.bottomBar p {
+  margin: 0;
+  text-align: right;
+}

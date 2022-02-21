@@ -1,5 +1,7 @@
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import { MAX_WISH_LENGTH, WARN_WHEN_CHARACTERS_LEFT } from "../../settings";
 import { className } from "../../utils/className";
+import { plural } from "../../utils/plural";
 import styles from "./Note.module.css";
 
 type Props = {
@@ -8,12 +10,18 @@ type Props = {
 
 type NoteState = "enter-note" | "submitting" | "sharing" | "resetting";
 
+const charsLeft = plural(
+  (amount) => <p>nog {amount} karakters over</p>,
+  () => <p>nog 1 karakter over</p>,
+  () => <p>maximum aantal karakters bereikt</p>
+);
+
 export const Note: React.FC<Props> = ({ onSubmit }) => {
   const [contents, setContents] = useState("");
   const [state, setState] = useState<NoteState>("enter-note");
 
   const onChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
-    setContents(e.target.value);
+    setContents(e.target.value.slice(0, MAX_WISH_LENGTH));
   }, []);
 
   const onNoteSubmit = useCallback(() => {
@@ -58,10 +66,16 @@ export const Note: React.FC<Props> = ({ onSubmit }) => {
             disabled={!["enter-note", "resetting"].some((s) => s === state)}
             placeholder="Type uw wens voor Valkenburg aan de Geul hier..."
           ></textarea>
-
-          <button disabled={contents.trim().length < 4} onClick={onNoteSubmit}>
-            Make a wish
-          </button>
+          <div className={styles.bottomBar}>
+            <button
+              disabled={contents.trim().length < 4}
+              onClick={onNoteSubmit}
+            >
+              Make a wish
+            </button>
+            {contents.length > MAX_WISH_LENGTH - WARN_WHEN_CHARACTERS_LEFT &&
+              charsLeft(MAX_WISH_LENGTH - contents.length)}
+          </div>
         </div>
         <div
           className={className({

@@ -6,9 +6,7 @@ import { Thoughts } from "../components/Thoughts";
 import { Tree } from "../components/Tree";
 import { useAccess } from "../persistence/authentication";
 import { addWish, useWishCount } from "../persistence/wishes";
-
-const GROWTH_START = 0.04;
-const WISH_GROWTH = 0.01;
+import { GROWTH_START, WISH_GROWTH } from "../settings";
 
 const Main = () => {
   const access = useAccess();
