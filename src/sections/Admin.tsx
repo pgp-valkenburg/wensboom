@@ -6,6 +6,7 @@ import {
   disapproveWishes,
   useNewWishes,
 } from "../persistence/wishes";
+import styles from "./Admin.module.css";
 
 const Admin = () => {
   const [userName, setUserName] = useState("");
@@ -67,7 +68,7 @@ const Admin = () => {
 
       {loginState === "authenticated" && wishes && (
         <div>
-          <table>
+          <table className={styles.table}>
             <thead>
               <tr>
                 <td>Check</td>

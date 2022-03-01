@@ -1,23 +1,34 @@
 import React, { useCallback } from "react";
 import { Field } from "../components/Field";
+import { Intro } from "../components/Intro";
 import { Note } from "../components/Note";
 import { Sky } from "../components/Sky";
 import { Thoughts } from "../components/Thoughts";
 import { Tree } from "../components/Tree";
 import { useAccess } from "../persistence/authentication";
 import { addWish, useWishCount } from "../persistence/wishes";
-import { GROWTH_START, WISH_GROWTH } from "../settings";
+import { GROWTH_START, UNAPPROVED_WISH_GROWTH, WISH_GROWTH } from "../settings";
+import { plural } from "../utils/plural";
+
+const showWishes = plural(
+  (counter) => <p>{counter} wensen in de boom!</p>,
+  (counter) => <p>{counter} wens in de boom!</p>,
+  () => <p>Nog geen wensen in de boom!</p>
+);
 
 const Main = () => {
   const access = useAccess();
-  const counter = useWishCount(access);
+  const [submitCounter, confirmedCounter] = useWishCount(access);
   const onSubmit = useCallback((contents: string) => {
     addWish(contents);
   }, []);
 
   const growth = Math.min(
     1,
-    GROWTH_START + counter * WISH_GROWTH * (1 - GROWTH_START)
+    GROWTH_START +
+      (confirmedCounter * WISH_GROWTH +
+        submitCounter * UNAPPROVED_WISH_GROWTH) *
+        (1 - GROWTH_START)
   );
 
   if (access === "denied") {
@@ -37,7 +48,10 @@ const Main = () => {
           {access === "access" && <Thoughts growth={growth} />}
         </Field>
       </Sky>
-      <p>{counter} wensen in de boom!</p>
+      <Intro>
+        {showWishes(submitCounter + confirmedCounter)}
+        <p>Groei: {Math.round(growth * 10e4) / 10e2}%</p>
+      </Intro>
 
       <Note onSubmit={onSubmit} />
     </div>

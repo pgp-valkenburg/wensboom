@@ -1,0 +1,7 @@
+.table tr td {
+  padding: 0.2em;
+  border-bottom: 1px solid #ddd;
+}
+.table tbody tr:nth-child(odd) td {
+  background-color: #eee;
+}
