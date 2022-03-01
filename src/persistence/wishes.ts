@@ -21,6 +21,7 @@ type Wish = {
 
 const wishListRef = ref(db, "wishes");
 const wishCountRef = ref(db, "wishCount");
+const approvedCountRef = ref(db, "approvedCount");
 
 export const addWish = (wish: string) => {
   const wishData: Wish = {
@@ -33,16 +34,29 @@ export const addWish = (wish: string) => {
   return set(newWishRef, wishData);
 };
 
-export const useWishCount = (accessState: AccessState): number => {
-  const [count, setCount] = useState(0);
+export const useWishCount = (
+  accessState: AccessState
+): [wishCount: number, approvedCount: number] => {
+  const [wishCount, setWishCount] = useState(0);
+  const [approvedCount, setApprovedCount] = useState(0);
+
   useEffect(() => {
     if (accessState !== "access") return;
     onValue(wishCountRef, (snapshot) => {
       const data = snapshot.val();
-      setCount(data);
+      if (data !== null) {
+        setWishCount(data);
+      }
+    });
+
+    onValue(approvedCountRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data !== null) {
+        setApprovedCount(data);
+      }
     });
   }, [accessState]);
-  return count;
+  return [wishCount - approvedCount, approvedCount];
 };
 
 export const useNewWishes = (authenticated: boolean) => {
@@ -78,7 +92,10 @@ export const approveWishes = (wishList: string[]) => {
     updates["/wishes/" + key + "/approvedAt"] = new Date().getTime();
   });
 
-  return update(ref(db), updates);
+  return Promise.all([
+    update(ref(db), updates),
+    set(approvedCountRef, increment(1)),
+  ]);
 };
 
 export const disapproveWishes = (wishList: string[]) => {

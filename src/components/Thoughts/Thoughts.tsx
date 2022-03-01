@@ -15,7 +15,10 @@ export const Thoughts: React.FC<{ growth: number }> = ({ growth }) => {
 
   useEffect(() => {
     const interval = setInterval(
-      () => setPosition((p) => (p + 1) % animationTexts.length),
+      () =>
+        setPosition((p) =>
+          animationTexts.length === 0 ? 0 : (p + 1) % animationTexts.length
+        ),
       10_000
     );
     return () => clearInterval(interval);

@@ -16,7 +16,7 @@ const charsLeft = plural(
   () => <p>maximum aantal karakters bereikt</p>
 );
 
-export const Note: React.FC<Props> = ({ onSubmit }) => {
+export const Note: React.FC<Props> = ({ onSubmit, children }) => {
   const [contents, setContents] = useState("");
   const [state, setState] = useState<NoteState>("enter-note");
 
@@ -60,6 +60,7 @@ export const Note: React.FC<Props> = ({ onSubmit }) => {
             [styles.frontFacing]: state === "resetting",
           })}
         >
+          {children}
           <textarea
             value={contents}
             onChange={onChange}

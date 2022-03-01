@@ -48,10 +48,7 @@ const Main = () => {
           {access === "access" && <Thoughts growth={growth} />}
         </Field>
       </Sky>
-      <Intro>
-        {showWishes(submitCounter + confirmedCounter)}
-        <p>Groei: {Math.round(growth * 10e4) / 10e2}%</p>
-      </Intro>
+      <Intro>{showWishes(submitCounter + confirmedCounter)}</Intro>
 
       <Note onSubmit={onSubmit} />
     </div>

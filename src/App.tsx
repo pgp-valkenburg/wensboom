@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./App.css";
 import Admin from "./sections/Admin";
 import Main from "./sections/Main";
 
