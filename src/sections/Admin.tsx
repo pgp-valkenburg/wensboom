@@ -1,5 +1,5 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { auth } from "../persistence/firebase";
 import {
   approveWishes,
@@ -45,6 +45,13 @@ const Admin = () => {
       });
   }, [userName, password]);
 
+  const mainCheckBoxRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (mainCheckBoxRef.current === null) return;
+    mainCheckBoxRef.current.indeterminate =
+      selectedWishes.length < wishes.length && selectedWishes.length > 0;
+  }, [mainCheckBoxRef, selectedWishes, wishes.length]);
+
   return (
     <div>
       <h1>Admin</h1>
@@ -71,8 +78,21 @@ const Admin = () => {
           <table className={styles.table}>
             <thead>
               <tr>
-                <td>Check</td>
-                <td>Wish</td>
+                <th>
+                  <input
+                    ref={mainCheckBoxRef}
+                    type={"checkbox"}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setSeletedWishes(() => wishes.map((e) => e.key));
+                      } else {
+                        setSeletedWishes(() => []);
+                      }
+                    }}
+                    checked={selectedWishes.length === wishes.length}
+                  />
+                </th>
+                <th>Wish</th>
               </tr>
             </thead>
             <tbody>
