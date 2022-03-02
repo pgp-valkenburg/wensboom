@@ -1,8 +1,18 @@
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
-import { MAX_WISH_LENGTH, WARN_WHEN_CHARACTERS_LEFT } from "../../settings";
+import {
+  MAX_WISH_LENGTH,
+  socialMediaShareMessage,
+  SOCIAL_MEDIA_HASHTAG,
+  SOCIAL_MEDIA_SITE_TITLE,
+  SOCIAL_MEDIA_URL,
+  WARN_WHEN_CHARACTERS_LEFT,
+} from "../../settings";
 import { className } from "../../utils/className";
 import { plural } from "../../utils/plural";
+
 import styles from "./Note.module.css";
+import { SocialMediaShare } from "../SocialMediaShare";
+import { Button } from "../Button";
 
 type Props = {
   onSubmit: (contents: string) => void;
@@ -18,7 +28,9 @@ const charsLeft = plural(
 
 export const Note: React.FC<Props> = ({ onSubmit, children }) => {
   const [contents, setContents] = useState("");
-  const [state, setState] = useState<NoteState>("enter-note");
+  const [shareWish, setShareWish] = useState("Testbericht van Matthijs");
+  // const [state, setState] = useState<NoteState>("enter-note");
+  const [state, setState] = useState<NoteState>("sharing");
 
   const onChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
     setContents(e.target.value.slice(0, MAX_WISH_LENGTH));
@@ -36,6 +48,7 @@ export const Note: React.FC<Props> = ({ onSubmit, children }) => {
     if (state === "submitting") {
       const timer = setTimeout(() => {
         onSubmit(contents);
+        setShareWish(contents);
         setContents("");
         setState("sharing");
       }, 3000);
@@ -68,12 +81,12 @@ export const Note: React.FC<Props> = ({ onSubmit, children }) => {
             placeholder="Type uw wens voor Valkenburg aan de Geul hier..."
           ></textarea>
           <div className={styles.bottomBar}>
-            <button
+            <Button
               disabled={contents.trim().length < 4}
               onClick={onNoteSubmit}
             >
-              Make a wish
-            </button>
+              Plaats wens in de boom
+            </Button>
             {contents.length > MAX_WISH_LENGTH - WARN_WHEN_CHARACTERS_LEFT &&
               charsLeft(MAX_WISH_LENGTH - contents.length)}
           </div>
@@ -86,8 +99,15 @@ export const Note: React.FC<Props> = ({ onSubmit, children }) => {
               state === "enter-note" || state === "submitting",
           })}
         >
-          <h1>Delen! Duimpies!</h1>
-          <button onClick={onNoteReset}>Doe nog een wens...</button>
+          <h1>Deel je wens met anderen!</h1>
+          <SocialMediaShare
+            url={SOCIAL_MEDIA_URL}
+            message={socialMediaShareMessage(shareWish)}
+            hashTag={SOCIAL_MEDIA_HASHTAG}
+            pageTitle={SOCIAL_MEDIA_SITE_TITLE}
+          />
+
+          <Button onClick={onNoteReset}>Doe nog een wens...</Button>
         </div>
       </div>
     </div>

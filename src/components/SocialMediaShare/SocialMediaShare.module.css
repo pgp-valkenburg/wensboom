@@ -1,0 +1,9 @@
+.sharePreview {
+  background: #f8f8f8;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 10px;
+}
+.shareBar button + button {
+  margin-left: 1em;
+}

@@ -64,8 +64,12 @@
 .note textarea {
   background: transparent;
   border: none;
+
   font-size: 1.5rem;
-  line-height: 2rem;
+  line-height: 2em;
+  font-family: "Amiko", Helvetica, Arial, Lucida, sans-serif;
+  font-weight: 400;
+
   display: block;
   margin: 0;
   height: 8em;
