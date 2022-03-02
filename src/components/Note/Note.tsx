@@ -28,9 +28,9 @@ const charsLeft = plural(
 
 export const Note: React.FC<Props> = ({ onSubmit, children }) => {
   const [contents, setContents] = useState("");
-  const [shareWish, setShareWish] = useState("Testbericht van Matthijs");
-  // const [state, setState] = useState<NoteState>("enter-note");
-  const [state, setState] = useState<NoteState>("sharing");
+  const [shareWish, setShareWish] = useState("");
+  const [state, setState] = useState<NoteState>("enter-note");
+  // const [state, setState] = useState<NoteState>("sharing");
 
   const onChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
     setContents(e.target.value.slice(0, MAX_WISH_LENGTH));
