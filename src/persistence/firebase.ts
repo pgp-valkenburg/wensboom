@@ -1,6 +1,5 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import { connectAuthEmulator, getAuth } from "firebase/auth";
 import { getDatabase, connectDatabaseEmulator } from "firebase/database";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -16,12 +15,10 @@ const firebaseConfig = {
   storageBucket: `${projectId}.appspot.com`,
   messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID,
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
-  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const db = getDatabase(
   app,
@@ -34,4 +31,4 @@ if (document.location.hostname === "localhost") {
   console.info("Using an emulated database");
 }
 
-export { db, analytics, auth };
+export { db, auth };

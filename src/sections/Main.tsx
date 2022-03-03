@@ -1,8 +1,9 @@
-import { type } from "os";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { Field } from "../components/Field";
+import { Footer } from "../components/Footer";
 import { Intro } from "../components/Intro";
 import { Note } from "../components/Note";
+import { Sign } from "../components/Sign";
 import { Sky } from "../components/Sky";
 import { SocialMediaShare } from "../components/SocialMediaShare";
 import { Thoughts } from "../components/Thoughts";
@@ -19,13 +20,6 @@ import {
   UNAPPROVED_WISH_GROWTH,
   WISH_GROWTH,
 } from "../settings";
-import { plural } from "../utils/plural";
-
-const showWishes = plural(
-  (counter) => <p>{counter} wensen in de boom!</p>,
-  (counter) => <p>{counter} wens in de boom!</p>,
-  () => <p>Nog geen wensen in de boom!</p>
-);
 
 const Main = () => {
   const access = useAccess();
@@ -58,17 +52,27 @@ const Main = () => {
 
   return (
     <div>
-      <Sky>
+      <Sky growth={growth}>
         <Field>
           <Tree growth={growth} />
           {access === "access" && <Thoughts growth={growth} />}
+          {access === "access" && (
+            <Sign counter={submitCounter + confirmedCounter} />
+          )}
         </Field>
       </Sky>
-      <Intro>{showWishes(submitCounter + confirmedCounter)}</Intro>
+      <Intro>
+        <p>
+          Leuk dat je onze wensboom komt bekijken! Deze boom groeit door het
+          doen van een wens. Doe een wens! Als deze aansluit bij onze
+          kernwaarden “Sociaal, Groen en Duurzaam”, dan zullen we proberen hem
+          uit te laten komen!
+        </p>
+      </Intro>
 
       {MAX_WISHES > ownWishCounter ? (
         <Note onSubmit={onSubmit}>
-          <h3>Mijn wens:</h3>
+          <h3>Mijn wens voor Valkenburg aan de Geul:</h3>
         </Note>
       ) : (
         <Intro>
@@ -88,6 +92,18 @@ const Main = () => {
           />
         </Intro>
       )}
+      <Footer>
+        <p>
+          &copy; 2022 Progressieve Groene Partij Valkenburg aan de Geul. Voor
+          meer informatie zie{" "}
+          <a href="https://pgpvalkenburg.nl">onze website</a>. De wensboom van
+          PGP Valkenburg aan de Geul is gebouwd door vrijwilligers, met behulp
+          van openbare software.{" "}
+          <a href="https://github.com/pgp-valkenburg/wensboom/">
+            De broncode is openbaar.
+          </a>
+        </p>
+      </Footer>
     </div>
   );
 };

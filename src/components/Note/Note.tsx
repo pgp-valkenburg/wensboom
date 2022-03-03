@@ -78,7 +78,7 @@ export const Note: React.FC<Props> = ({ onSubmit, children }) => {
             value={contents}
             onChange={onChange}
             disabled={!["enter-note", "resetting"].some((s) => s === state)}
-            placeholder="Type uw wens voor Valkenburg aan de Geul hier..."
+            placeholder="Type hier uw wens of idee..."
           ></textarea>
           <div className={styles.bottomBar}>
             <Button
