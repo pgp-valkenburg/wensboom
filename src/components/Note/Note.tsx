@@ -37,6 +37,7 @@ export const Note: React.FC<Props> = ({ onSubmit, children }) => {
   }, []);
 
   const onNoteSubmit = useCallback(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     setState("submitting");
   }, []);
 
