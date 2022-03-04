@@ -28,6 +28,7 @@ const Main = () => {
   const onSubmit = useCallback(
     (contents: string) => {
       addWish(contents);
+      window.scrollTo({ top: 0, behavior: "smooth" });
       increaseOwnWishCounter();
     },
     [increaseOwnWishCounter]
