@@ -18,7 +18,7 @@ const Admin = () => {
   const wishes = useNewWishes(loginState === "authenticated");
   const [selectedWishes, setSelectedWishes] = useState<string[]>([]);
   const [notificationState, setNotificationState] = useState<string>(
-    Notification.permission
+    "Notification" in window ? Notification.permission : "denied"
   );
   useEffect(() => {
     // var img = '/to-do-notifications/img/icon-128.png';
