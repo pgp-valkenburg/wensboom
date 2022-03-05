@@ -34,14 +34,13 @@ const Main = () => {
     [increaseOwnWishCounter]
   );
 
-  const growth =
-    Math.min(
-      1,
-      GROWTH_START +
-        (confirmedCounter * WISH_GROWTH +
-          submitCounter * UNAPPROVED_WISH_GROWTH) *
-          (1 - GROWTH_START)
-    ) + 0.7;
+  const growth = Math.min(
+    1,
+    GROWTH_START +
+      (confirmedCounter * WISH_GROWTH +
+        submitCounter * UNAPPROVED_WISH_GROWTH) *
+        (1 - GROWTH_START)
+  );
 
   if (access === "denied") {
     return (

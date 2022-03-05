@@ -1,5 +1,6 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
+import { Button } from "../components/Button";
 import { auth } from "../persistence/firebase";
 import {
   approveWishes,
@@ -15,7 +16,21 @@ const Admin = () => {
     "authenticated" | "denied" | "progress"
   >("denied");
   const wishes = useNewWishes(loginState === "authenticated");
-  const [selectedWishes, setSeletedWishes] = useState<string[]>([]);
+  const [selectedWishes, setSelectedWishes] = useState<string[]>([]);
+  const [notificationState, setNotificationState] = useState<string>(
+    Notification.permission
+  );
+  useEffect(() => {
+    // var img = '/to-do-notifications/img/icon-128.png';
+    const text = "Nieuwe wensen!";
+    if (document.visibilityState === "hidden") {
+      new Notification("PGP Wensboom", {
+        body: text,
+        lang: "nl",
+        tag: "pgpWensboom",
+      });
+    }
+  }, [wishes]);
 
   const onUsernameInput = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -75,6 +90,17 @@ const Admin = () => {
 
       {loginState === "authenticated" && wishes && (
         <div>
+          {notificationState === "default" && (
+            <Button
+              onClick={() => {
+                Notification.requestPermission().then((result) => {
+                  setNotificationState(result);
+                });
+              }}
+            >
+              Enable notifications
+            </Button>
+          )}
           <table className={styles.table}>
             <thead>
               <tr>
@@ -84,9 +110,9 @@ const Admin = () => {
                     type={"checkbox"}
                     onChange={(e) => {
                       if (e.target.checked) {
-                        setSeletedWishes(() => wishes.map((e) => e.key));
+                        setSelectedWishes(() => wishes.map((e) => e.key));
                       } else {
-                        setSeletedWishes(() => []);
+                        setSelectedWishes(() => []);
                       }
                     }}
                     checked={selectedWishes.length === wishes.length}
@@ -103,9 +129,9 @@ const Admin = () => {
                       type={"checkbox"}
                       onChange={(e) => {
                         if (e.target.checked) {
-                          setSeletedWishes((s) => s.concat(entry.key));
+                          setSelectedWishes((s) => s.concat(entry.key));
                         } else {
-                          setSeletedWishes((s) =>
+                          setSelectedWishes((s) =>
                             s.filter((e) => e !== entry.key)
                           );
                         }
@@ -123,7 +149,7 @@ const Admin = () => {
           <button
             onClick={() => {
               approveWishes(selectedWishes);
-              setSeletedWishes([]);
+              setSelectedWishes([]);
             }}
           >
             Approve
@@ -131,7 +157,7 @@ const Admin = () => {
           <button
             onClick={() => {
               disapproveWishes(selectedWishes);
-              setSeletedWishes([]);
+              setSelectedWishes([]);
             }}
           >
             Disapprove
