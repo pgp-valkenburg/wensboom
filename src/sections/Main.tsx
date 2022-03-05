@@ -2,6 +2,7 @@ import { useCallback } from "react";
 import { Field } from "../components/Field";
 import { Footer } from "../components/Footer";
 import { Intro } from "../components/Intro";
+import { Logo } from "../components/Logo";
 import { Note } from "../components/Note";
 import { Sign } from "../components/Sign";
 import { Sky } from "../components/Sky";
@@ -33,13 +34,14 @@ const Main = () => {
     [increaseOwnWishCounter]
   );
 
-  const growth = Math.min(
-    1,
-    GROWTH_START +
-      (confirmedCounter * WISH_GROWTH +
-        submitCounter * UNAPPROVED_WISH_GROWTH) *
-        (1 - GROWTH_START)
-  );
+  const growth =
+    Math.min(
+      1,
+      GROWTH_START +
+        (confirmedCounter * WISH_GROWTH +
+          submitCounter * UNAPPROVED_WISH_GROWTH) *
+          (1 - GROWTH_START)
+    ) + 0.7;
 
   if (access === "denied") {
     return (
@@ -51,7 +53,8 @@ const Main = () => {
   }
 
   return (
-    <div>
+    <main>
+      <Logo />
       <Sky growth={growth}>
         <Field>
           <Tree growth={growth} />
@@ -104,7 +107,7 @@ const Main = () => {
           </a>
         </p>
       </Footer>
-    </div>
+    </main>
   );
 };
 

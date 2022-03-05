@@ -1,0 +1,26 @@
+.logo {
+  margin: 1rem;
+  width: 400px;
+  height: 120px;
+  position: absolute;
+  z-index: 1;
+  background-image: url("./PGP_logo.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  font-size: 0;
+}
+
+@media screen and (max-width: 1080px) {
+  .logo {
+    width: 300px;
+    height: 80px;
+  }
+}
+
+@media screen and (max-width: 580px) {
+  .logo {
+    width: 42px;
+    height: 42px;
+    background-image: url("./PGPtv_logo.png");
+  }
+}
