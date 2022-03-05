@@ -22,15 +22,18 @@ const Admin = () => {
   );
   useEffect(() => {
     // var img = '/to-do-notifications/img/icon-128.png';
+    if (document.visibilityState !== "hidden") return;
     const text = "Nieuwe wensen!";
-    if (document.visibilityState === "hidden") {
-      new Notification("PGP Wensboom", {
-        body: text,
-        lang: "nl",
-        tag: "pgpWensboom",
-      });
-    }
-  }, [wishes]);
+    Notification.requestPermission().then((result) => {
+      if (result === "granted") {
+        new Notification("PGP Wensboom", {
+          body: text,
+          lang: "nl",
+          tag: "pgpWensboom",
+        });
+      }
+    });
+  }, [loginState, wishes]);
 
   const onUsernameInput = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
