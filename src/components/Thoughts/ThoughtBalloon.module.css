@@ -22,14 +22,21 @@
   }
 }
 
-.balloon {
+.balloonAnimate {
   animation: bubble 7s ease-in-out 1 forwards;
+  position: absolute;
+  bottom: 0;
+}
+.balloonStatic {
+  position: relative;
+  transform: translate(20px, 0);
+  margin: 1rem;
+}
+.balloon {
   background: var(--thoughtBackground);
   border: 1px solid var(--thoughtBorder);
   border-radius: 10px;
   padding: 1em;
-  position: absolute;
-  bottom: 0;
   max-width: 350px;
 
   width: max-content;
@@ -38,9 +45,11 @@
 }
 
 .balloon p {
-  max-height: 5.75em;
   margin: 0;
+}
 
+.balloonTruncate p {
+  max-height: 5.75em;
   display: -webkit-box;
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;

@@ -1,0 +1,13 @@
+.tab {
+  display: inline-block;
+  padding: 0.5rem;
+  background-color: transparent;
+  border: 3px solid transparent;
+  border-bottom: 3px solid #eee;
+}
+
+.tabSelected {
+  font-weight: bold;
+  background-color: #eee;
+  border-bottom: 3px solid #060;
+}
