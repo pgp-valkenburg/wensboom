@@ -1,7 +1,15 @@
+import React, { Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Admin from "./sections/Admin";
 import Main from "./sections/Main";
+
+const AdminPanel = React.lazy(() => import("./sections/Admin"));
+
+const Admin: React.VFC = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <AdminPanel />
+  </Suspense>
+);
 
 const App = () => (
   <BrowserRouter>

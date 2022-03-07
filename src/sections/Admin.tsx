@@ -1,5 +1,5 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Button } from "../components/Button";
 import { auth } from "../persistence/firebase";
 import {
@@ -7,11 +7,10 @@ import {
   disapproveWishes,
   useNewWishes,
 } from "../persistence/wishes";
-import styles from "./Admin.module.css";
+import { LoginPanel } from "./components/LoginPanel";
+import { TableList } from "./components/TableList";
 
 const Admin = () => {
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
   const [loginState, setLoginState] = useState<
     "authenticated" | "denied" | "progress"
   >("denied");
@@ -21,7 +20,6 @@ const Admin = () => {
     "Notification" in window ? Notification.permission : "denied"
   );
   useEffect(() => {
-    // var img = '/to-do-notifications/img/icon-128.png';
     if (document.visibilityState !== "hidden") return;
     const text = "Nieuwe wensen!";
     Notification.requestPermission().then((result) => {
@@ -35,20 +33,7 @@ const Admin = () => {
     });
   }, [loginState, wishes]);
 
-  const onUsernameInput = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      setUserName(event.target.value);
-    },
-    []
-  );
-
-  const onPasswordInput = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      setPassword(event.target.value);
-    },
-    []
-  );
-  const onLogin = useCallback(() => {
+  const onLogin = useCallback((userName: string, password: string) => {
     setLoginState("progress");
     signInWithEmailAndPassword(auth, userName, password)
       .then((credentials) => {
@@ -61,36 +46,13 @@ const Admin = () => {
       .catch(() => {
         setLoginState("denied");
       });
-  }, [userName, password]);
-
-  const mainCheckBoxRef = useRef<HTMLInputElement>(null);
-  useEffect(() => {
-    if (mainCheckBoxRef.current === null) return;
-    mainCheckBoxRef.current.indeterminate =
-      selectedWishes.length < wishes.length && selectedWishes.length > 0;
-  }, [mainCheckBoxRef, selectedWishes, wishes.length]);
+  }, []);
 
   return (
     <div>
       <h1>Admin</h1>
 
-      {loginState === "denied" && (
-        <div>
-          <p>Please login:</p>
-          <input
-            type="text"
-            placeholder="username"
-            onChange={onUsernameInput}
-          />
-          <input
-            type="password"
-            placeholder="password"
-            onChange={onPasswordInput}
-          />
-          <button onClick={onLogin}>Login</button>
-        </div>
-      )}
-
+      {loginState === "denied" && <LoginPanel onLogin={onLogin} />}
       {loginState === "authenticated" && wishes && (
         <div>
           {notificationState === "default" && (
@@ -104,49 +66,10 @@ const Admin = () => {
               Enable notifications
             </Button>
           )}
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th>
-                  <input
-                    ref={mainCheckBoxRef}
-                    type={"checkbox"}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setSelectedWishes(() => wishes.map((e) => e.key));
-                      } else {
-                        setSelectedWishes(() => []);
-                      }
-                    }}
-                    checked={selectedWishes.length === wishes.length}
-                  />
-                </th>
-                <th>Wish</th>
-              </tr>
-            </thead>
-            <tbody>
-              {wishes.map((entry) => (
-                <tr key={entry.key}>
-                  <td>
-                    <input
-                      type={"checkbox"}
-                      onChange={(e) => {
-                        if (e.target.checked) {
-                          setSelectedWishes((s) => s.concat(entry.key));
-                        } else {
-                          setSelectedWishes((s) =>
-                            s.filter((e) => e !== entry.key)
-                          );
-                        }
-                      }}
-                      checked={selectedWishes.includes(entry.key)}
-                    />
-                  </td>
-                  <td>{entry.body}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <TableList
+            itemsState={[selectedWishes, setSelectedWishes]}
+            items={wishes}
+          />
 
           <p>{selectedWishes.length} Items geselecteerd.</p>
           <button
