@@ -9,37 +9,29 @@ import { Sky } from "../components/Sky";
 import { SocialMediaShare } from "../components/SocialMediaShare";
 import { Thoughts } from "../components/Thoughts";
 import { Tree } from "../components/Tree";
+import { useCounters } from "../hooks/useCounters";
 import { useAccess } from "../persistence/authentication";
 import { useLocalWishCount } from "../persistence/localWishes";
-import { addWish, useWishCount } from "../persistence/wishes";
+import { addWish } from "../persistence/wishes";
 import {
-  GROWTH_START,
   MAX_WISHES,
+  MOVIE_MODE,
   SOCIAL_MEDIA_HASHTAG,
   SOCIAL_MEDIA_SITE_TITLE,
   SOCIAL_MEDIA_URL,
-  UNAPPROVED_WISH_GROWTH,
-  WISH_GROWTH,
 } from "../settings";
 
 const Main = () => {
   const access = useAccess();
-  const [submitCounter, confirmedCounter] = useWishCount(access);
   const [ownWishCounter, increaseOwnWishCounter] = useLocalWishCount();
+  const [wishCounter, growth] = useCounters(access);
+
   const onSubmit = useCallback(
     (contents: string) => {
       addWish(contents);
       increaseOwnWishCounter();
     },
     [increaseOwnWishCounter]
-  );
-
-  const growth = Math.min(
-    1,
-    GROWTH_START +
-      (confirmedCounter * WISH_GROWTH +
-        submitCounter * UNAPPROVED_WISH_GROWTH) *
-        (1 - GROWTH_START)
   );
 
   if (access === "denied") {
@@ -53,14 +45,12 @@ const Main = () => {
 
   return (
     <main>
-      <Logo />
+      {!MOVIE_MODE && <Logo />}
       <Sky growth={growth}>
         <Field>
           <Tree growth={growth} />
-          {access === "access" && <Thoughts growth={growth} />}
-          {access === "access" && (
-            <Sign counter={submitCounter + confirmedCounter} />
-          )}
+          {access === "access" && !MOVIE_MODE && <Thoughts growth={growth} />}
+          {access === "access" && <Sign counter={wishCounter} />}
         </Field>
       </Sky>
       <Intro>

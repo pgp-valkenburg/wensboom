@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { MOVIE_MODE } from "../../settings";
 import { className } from "../../utils/className";
 import styles from "./Sign.module.css";
 
@@ -8,16 +9,22 @@ const Digit: React.FC<{ char: string }> = ({ char }) => {
 
   useEffect(() => {
     setFlipping("start");
-    const timer = setTimeout(() => {
-      setChar(char);
-      setFlipping("end");
-    }, 2100);
+    const timer = setTimeout(
+      () => {
+        setChar(char);
+        setFlipping("end");
+      },
+      MOVIE_MODE ? 100 : 1000
+    );
     return () => clearTimeout(timer);
   }, [char]);
 
   useEffect(() => {
     if (flipping === "end") {
-      setFlipping("done");
+      const timer = setTimeout(() => {
+        setFlipping("done");
+      }, 2);
+      return () => clearTimeout(timer);
     }
   }, [flipping]);
 
@@ -25,7 +32,8 @@ const Digit: React.FC<{ char: string }> = ({ char }) => {
     <span
       className={className({
         [styles.digit]: true,
-        [styles.flip]: flipping === "start",
+        [styles.flip]: !MOVIE_MODE && flipping === "start",
+        [styles.flipMovie]: MOVIE_MODE && flipping === "start",
         [styles.endFlip]: flipping === "done",
       })}
       data-prevchar={prevChar}

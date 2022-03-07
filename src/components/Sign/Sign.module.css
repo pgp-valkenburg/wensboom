@@ -41,6 +41,7 @@
   line-height: 1em;
   margin: 0.2em;
   text-align: center;
+  white-space: nowrap;
 }
 
 @keyframes signShake {
@@ -78,11 +79,15 @@
   position: absolute;
   transform: perspective(1000px) rotateX(0deg);
   transform-origin: center bottom;
-  transition: transform 1s;
 }
 
 .flip::before {
-  transition: transform 1s;
+  transition: transform 0.5s;
+  transform: perspective(1000px) rotateX(90deg);
+}
+
+.flipMovie::before {
+  transition: transform 0.2s;
   transform: perspective(1000px) rotateX(90deg);
 }
 
